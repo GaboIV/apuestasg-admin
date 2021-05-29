@@ -30,6 +30,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       this.loadForm();
     });
     this.subscriptions.push(sb);
+
+    console.log(this.user);
   }
 
   ngOnDestroy() {
@@ -38,13 +40,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      pic: [this.user.pic],
-      firstname: [this.user.firstname, Validators.required],
-      lastname: [this.user.lastname, Validators.required],
-      companyName: [this.user.companyName, Validators.required],
-      phone: [this.user.phone, Validators.required],
+      pic: [this.user.admin.photo_url],
+      firstname: [this.user.admin?.name, Validators.required],
+      lastname: [this.user.admin?.lastname, Validators.required],
+      role: [this.user.roles[0].name, Validators.required],
+      phone: [this.user.admin.phone, Validators.required],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      website: [this.user.website, Validators.required]
+      address: [this.user.admin.address, Validators.required]
     });
   }
 

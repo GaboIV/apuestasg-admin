@@ -17,12 +17,12 @@
     <!--begin::Header-->
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
-        <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
-        <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
+        <h3 class="card-label font-weight-bolder text-dark">Información personal</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">Actualizar su infomación personal</span>
       </div>
       <div class="card-toolbar">
-        <button type="submit" [disabled]="formGroup.invalid" class="btn btn-success mr-2" (click)="save()">Save Changes</button>
-        <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        <button type="submit" [disabled]="formGroup.invalid" class="btn btn-success mr-2" (click)="save()">Guardar cambios</button>
+        <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
       </div>
     </div>
     <!--end::Header-->
@@ -30,19 +30,13 @@
     <div class="form">
       <!--begin::Body-->
       <div class="card-body">
-        <div class="row">
-          <label class="col-xl-3"></label>
-          <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mb-6">Customer Info</h5>
-          </div>
-        </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Imagen de perfil</label>
           <div class="col-lg-9 col-xl-6">
             <div class="image-input image-input-outline"
               id="kt_profile_avatar"
               [class.image-input-empty]="!user.pic"
-              [style.backgroundImage]="'url(./assets/media/users/blank.png)'"
+              [style.backgroundImage]="'url('+ user.admin?.photo_url +')'"
             >
               <div class="image-input-wrapper" [style.backgroundImage]="getPic()"></div>
               <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -66,11 +60,11 @@
                 <i class="ki ki-bold-close icon-xs text-muted"></i>
               </span>
             </div>
-            <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+            <span class="form-text text-muted">Tipo de archivos permitidos: png, jpg, jpeg.</span>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Nombres</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
               type="text"
@@ -81,7 +75,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Apellidos</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
               type="text"
@@ -92,27 +86,27 @@
             />
           </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
               type="text"
-              formControlName="companyName"
-              [class.is-invalid]="isControlInvalid('companyName')"
-              [class.is-valid]="isControlValid('companyName')"
+              formControlName="role"
+              [class.is-invalid]="isControlInvalid('role')"
+              [class.is-valid]="isControlValid('role')"
             />
             <span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your
               full name.</span>
           </div>
-        </div>
+        </div> -->
         <div class="row">
           <label class="col-xl-3"></label>
           <div class="col-lg-9 col-xl-6">
-            <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
+            <h5 class="font-weight-bold mt-10 mb-6">Información de contacto</h5>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Teléfono</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
               <div class="input-group-prepend">
@@ -132,7 +126,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Correo electrónico</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
               <div class="input-group-prepend">
@@ -151,15 +145,15 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Company Site</label>
+          <label class="col-xl-3 col-lg-3 col-form-label">Dirección</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
               <input type="text"
                 class="form-control form-control-lg form-control-solid"
-                placeholder="Company Website"
-                formControlName="website"
-                [class.is-invalid]="isControlInvalid('website')"
-                [class.is-valid]="isControlValid('website')"
+                placeholder="Dirección"
+                formControlName="address"
+                [class.is-invalid]="isControlInvalid('address')"
+                [class.is-valid]="isControlValid('address')"
                 />
             </div>
           </div>

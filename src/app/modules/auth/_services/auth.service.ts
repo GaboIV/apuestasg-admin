@@ -31,14 +31,18 @@ export class AuthService implements OnDestroy {
 
 
   get currentUserValue(): UserModel {
-    const url = environment.apiUrl + "/me";
+    const auth = this.getAuthFromLocalStorage();
 
-    console.log(this.authLocalStorageToken);
+    if (!auth || !auth.accessToken) {
+      return null;
+    }
+    
+    const url = environment.apiUrl + "/me";
 
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTljNjkxYmZhNzVmYjA3Y2VhMTk2NTQ1MDUyNmQxMmUwMTI1ZmJhMTI1NzU1N2E4N2YzYTgxNWMzMzZiYTRmMWJlOTg2NDA0YTA1ZjExMzQiLCJpYXQiOjE2MjE3Mjg2NzksIm5iZiI6MTYyMTcyODY3OSwiZXhwIjoxNjUzMjY0Njc5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.F2yh8nmV_kjEXJW88G3bhWzjLprRtcHI_0ZNYz56R2WFB25Kw6SqfYu2wxsUQCKlui_3tAMOsUBcciUi9HEsrW3EiOM0xNH1iGcSyp4j1kdgBa23zLxKBOZvOtI8eWuckUG780JCyfj0NDb48cxsJ0vZOymSrkVhvTlUQghyC8zGzVtWW7iG2IyCzZRjkDG9PRx3oETl3QzJAokO52Lkg8FOm15RIdGw394fjXNCMv4ZPftrbxc--xMNb5BQ8Fl97BajNpmE-GS0_xrV8w_QKiu3PBNVHzISPYPSLEHaDPqFjoSunrm7sGXTE00ruH-w2E6HxsibeCU0vaoUPYf4yhHjcw5xMF0qK3_tv7wBjig5HoRu9R6NZedqd2iAB4BGsd9JxWLIYblNWYcSkaKFvI5ikY6sWBblBs7ONHauckBhgXspYfG_Q4I8WjkIcRTMV_RtkhJcYODPL76BsBJdJBAz67r0vIqYGucLqJZIvpicukcUqzkYxdSoDFz8Aa8iQvDK0p8G0rZ_SZY8WWL1-L425aSEj3QFAe2BTLiSgC01zSAplwnF9TGHDMkkMJZhqmh3pHMGEs3_4WUNSx9uToWimixV2tkTV2qurPGBWEBvz7vrvkuIyxynKkuhXT3mz-zFHoScXvDMv6FnfieYcKrcUTo865ELrVRwgftbrKU'
+        'Authorization': 'Bearer ' + auth.accessToken
       })
     };
 
@@ -68,7 +72,7 @@ export class AuthService implements OnDestroy {
   }
 
   // public methods
-  login(email: string, password: string): Observable<UserModel> {
+  login(email: String, password: String): Observable<UserModel> {
     this.isLoadingSubject.next(true);
 
     const url = environment.apiUrl + "/auth/login";
@@ -109,6 +113,7 @@ export class AuthService implements OnDestroy {
 
   getUserByToken(): Observable<UserModel> {
     const auth = this.getAuthFromLocalStorage();
+
     if (!auth || !auth.accessToken) {
       return of(undefined);
     }
@@ -118,7 +123,7 @@ export class AuthService implements OnDestroy {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTljNjkxYmZhNzVmYjA3Y2VhMTk2NTQ1MDUyNmQxMmUwMTI1ZmJhMTI1NzU1N2E4N2YzYTgxNWMzMzZiYTRmMWJlOTg2NDA0YTA1ZjExMzQiLCJpYXQiOjE2MjE3Mjg2NzksIm5iZiI6MTYyMTcyODY3OSwiZXhwIjoxNjUzMjY0Njc5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.F2yh8nmV_kjEXJW88G3bhWzjLprRtcHI_0ZNYz56R2WFB25Kw6SqfYu2wxsUQCKlui_3tAMOsUBcciUi9HEsrW3EiOM0xNH1iGcSyp4j1kdgBa23zLxKBOZvOtI8eWuckUG780JCyfj0NDb48cxsJ0vZOymSrkVhvTlUQghyC8zGzVtWW7iG2IyCzZRjkDG9PRx3oETl3QzJAokO52Lkg8FOm15RIdGw394fjXNCMv4ZPftrbxc--xMNb5BQ8Fl97BajNpmE-GS0_xrV8w_QKiu3PBNVHzISPYPSLEHaDPqFjoSunrm7sGXTE00ruH-w2E6HxsibeCU0vaoUPYf4yhHjcw5xMF0qK3_tv7wBjig5HoRu9R6NZedqd2iAB4BGsd9JxWLIYblNWYcSkaKFvI5ikY6sWBblBs7ONHauckBhgXspYfG_Q4I8WjkIcRTMV_RtkhJcYODPL76BsBJdJBAz67r0vIqYGucLqJZIvpicukcUqzkYxdSoDFz8Aa8iQvDK0p8G0rZ_SZY8WWL1-L425aSEj3QFAe2BTLiSgC01zSAplwnF9TGHDMkkMJZhqmh3pHMGEs3_4WUNSx9uToWimixV2tkTV2qurPGBWEBvz7vrvkuIyxynKkuhXT3mz-zFHoScXvDMv6FnfieYcKrcUTo865ELrVRwgftbrKU'
+        'Authorization': 'Bearer ' + auth.accessToken
       })
     };
 
@@ -137,8 +142,8 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  // need create new user then login
-  registration(user: UserModel): Observable<any> {
+   // need create new user then login
+   registration(user: UserModel): Observable<any> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.createUser(user).pipe(
       map(() => {

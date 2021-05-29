@@ -16,10 +16,6 @@ const routes: Routes = [
     component: UserProfileComponent,
     children: [
       {
-        path: 'profile-overview',
-        component: ProfileOverviewComponent,
-      },
-      {
         path: 'personal-information',
         component: PersonalInformationComponent,
       },
@@ -47,8 +43,8 @@ const routes: Routes = [
         path: 'statements',
         component: StatementsComponent
       },
-      { path: '', redirectTo: 'profile-overview', pathMatch: 'full' },
-      { path: '**', redirectTo: 'profile-overview', pathMatch: 'full' },
+      { path: '', redirectTo: 'personal-information', pathMatch: 'full' },
+      { path: '**', redirectTo: 'personal-information', pathMatch: 'full' },
     ],
   },
 ];

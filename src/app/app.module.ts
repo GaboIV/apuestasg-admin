@@ -16,6 +16,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/splash-screen.module';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
+import { ClientInformationComponent } from './modals/client-information/client-information.component';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -28,7 +29,7 @@ function appInitializer(authService: AuthService) {
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ClientInformationComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -70,5 +71,8 @@ function appInitializer(authService: AuthService) {
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    ClientInformationComponent
+  ]
 })
 export class AppModule { }

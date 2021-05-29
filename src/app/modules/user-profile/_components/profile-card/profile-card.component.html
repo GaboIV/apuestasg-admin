@@ -18,20 +18,20 @@
     <!--begin::User-->
     <div class="d-flex align-items-center">
       <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-        <div class="symbol-label" [style.backgroundImage]="'url('+ user.pic +')'"></div>
-        <i class="symbol-badge bg-success"></i>
+        <div class="symbol-label" [style.backgroundImage]="'url('+ user.admin.photo_url +')'"></div>
+        <!-- <i class="symbol-badge bg-success"></i> -->
       </div>
       <div>
         <a class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary cursor-pointer">
-          {{user.firstname}} {{user.lastname}}
+          {{user.admin?.name}} {{user.admin?.lastname}}
         </a>
         <div class="text-muted">
-          {{user.ocupation}}
+          {{user.roles[0].key}}
         </div>
-        <div class="mt-2">
-          <a class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1 cursor-pointer">Chat</a>
+        <!-- <div class="mt-2">
+          <a class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1 cursor-pointer">Actualizar imagen</a>
           <a class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1 cursor-pointer">Follow</a>
-        </div>
+        </div> -->
       </div>
     </div>
     <!--end::User-->
@@ -39,39 +39,39 @@
     <!--begin::Contact-->
     <div class="py-9">
       <div class="d-flex align-items-center justify-content-between mb-2">
-        <span class="font-weight-bold mr-2">Email:</span>
+        <span class="font-weight-bold mr-2">Correo:</span>
         <a class="text-muted text-hover-primary">{{user.email}}</a>
       </div>
       <div class="d-flex align-items-center justify-content-between mb-2">
-        <span class="font-weight-bold mr-2">Phone:</span>
-        <span class="text-muted">{{user.phone}}</span>
+        <span class="font-weight-bold mr-2">Teléfono:</span>
+        <span class="text-muted">{{user.admin?.phone}}</span>
       </div>
       <div class="d-flex align-items-center justify-content-between">
-        <span class="font-weight-bold mr-2">Location:</span>
-        <span class="text-muted">{{user.address?.city}}</span>
+        <span class="font-weight-bold mr-2">Dirección:</span>
+        <span class="text-muted">{{user.admin?.address}}</span>
       </div>
     </div>
     <!--end::Contact-->
 
     <!--begin::Nav-->
     <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
-      <div class="navi-item mb-2">
+      <!-- <div class="navi-item mb-2">
         <a class="navi-link py-4" routerLink="/user-profile/profile-overview" routerLinkActive="active">
           <span class="navi-icon mr-2">
             <span [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'" cacheSVG="true" class="svg-icon"></span>
           </span>
           <span class="navi-text font-size-lg">
-            Profile Overview
+            Información del perfil
           </span>
         </a>
-      </div>
+      </div> -->
       <div class="navi-item mb-2">
         <a class="navi-link py-4" routerLink="/user-profile/personal-information" routerLinkActive="active">
           <span class="navi-icon mr-2">
             <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon"></span>
           </span>
           <span class="navi-text font-size-lg">
-            Personal Information
+            Información personal
           </span>
         </a>
       </div>

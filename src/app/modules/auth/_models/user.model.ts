@@ -3,13 +3,42 @@ import { AddressModel } from './address.model';
 import { SocialNetworksModel } from './social-networks.model';
 
 export class UserModel extends AuthModel {
-  id: number;
-  username: string;
-  password: string;
-  fullname: string;
-  email: string;
+  id: Number;
+  nick: String;
+  email: String;
+  status: Boolean;
+  attemps: Number;
+  web: Boolean;
+  email_verified_at: Boolean;
+  code_security: Number;
+  created_at: Date;
+  updated_at: Date;
+  admin: {
+    id: Number,
+    user_id: Number,
+    document_type: String,
+    document_number: String,
+    name: String,
+    lastname: String,
+    birthday: Date,
+    gender: String,
+    country_id: Number,
+    state_id: Number,
+    city_id: Number,
+    parish_id: Number,
+    address: String,
+    phone: String,
+    photo: String,
+    photo_url: String
+  };
+  roles: [{
+    id: Number,
+    name: String
+  }];
+  username: String;
+  password: String;
+  fullname: String;
   pic: string;
-  roles: number[];
   occupation: string;
   companyName: string;
   phone: string;

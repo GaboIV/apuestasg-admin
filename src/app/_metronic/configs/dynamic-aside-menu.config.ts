@@ -319,7 +319,7 @@ export const DynamicAsideMenuConfig = {
       ]
     },
     {
-      title: 'User Profile',
+      title: 'Perfil de usuario',
       root: true,
       bullet: 'dot',
       icon: 'flaticon2-user-outline-symbol',

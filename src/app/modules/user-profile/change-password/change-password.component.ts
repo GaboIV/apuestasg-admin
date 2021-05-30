@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AuthService, UserModel, ConfirmPasswordValidator } from '../../auth';
+import { UserProfileService } from '../_services/user-profile.service';
 
 @Component({
   selector: 'app-change-password',
@@ -16,7 +17,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isLoading$: Observable<boolean>;
 
-  constructor(private userService: AuthService, private fb: FormBuilder) {
+  constructor(
+    private userService: AuthService, 
+    private fb: FormBuilder,
+    private _userProfileService: UserProfileService,
+  ) {
     this.isLoading$ = this.userService.isLoadingSubject.asObservable();
   }
 
@@ -37,9 +42,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      currentPassword: [this.user.password, Validators.required],
+      current_password: ['', Validators.required],
       password: ['', Validators.required],
-      cPassword: ['', Validators.required]
+      password_confirmation: ['', Validators.required]
     }, {
       validator: ConfirmPasswordValidator.MatchPassword
     });
@@ -47,21 +52,18 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   save() {
     this.formGroup.markAllAsTouched();
+
     if (!this.formGroup.valid) {
       return;
     }
 
-    this.user.password = this.formGroup.value.password;
-    this.userService.isLoadingSubject.next(true);
-    setTimeout(() => {
-      this.userService.currentUserSubject.next(Object.assign({}, this.user));
-      this.userService.isLoadingSubject.next(false);
-    }, 2000);
-  }
+    const formValues = this.formGroup.value;    
 
-  cancel() {
-    this.user = Object.assign({}, this.firstUserState);
-    this.loadForm();
+    this.userService.isLoadingSubject.next(true);
+
+    this._userProfileService.updatePassword(formValues).subscribe(resp => {
+      this.userService.isLoadingSubject.next(false);
+    });
   }
 
   // helpers for View

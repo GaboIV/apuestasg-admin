@@ -54,7 +54,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      id: [this.user.id],
+      // id: [this.user.id],
       // photo: [this.user.admin.photo_url],
       document_type: [this.user.admin?.document_type, Validators.required],
       document_number: [this.user.admin?.document_number, Validators.required],

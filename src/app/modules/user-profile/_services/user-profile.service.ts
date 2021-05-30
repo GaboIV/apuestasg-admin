@@ -49,4 +49,15 @@ export class UserProfileService {
       })
     );
   }
+
+  updatePassword(data: any) {
+    const url = environment.apiUrl + '/me/change-password';
+
+    return this.http.put(url, data, this.authService.httpOptions)
+      .pipe(map( (resp: any) => {
+        const res = resp;
+        return res;
+      })
+    );
+  }
 }

@@ -46,7 +46,7 @@ export class ConfigurationService {
     });
   }
 
-  getCities(stateId: number) {
+  getCitiesByStateId(stateId: number) {
     let url = environment.apiUrl + '/config/states/' + stateId + '/cities';
 
     return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ export class ConfigurationService {
     });
   }
 
-  getParish(cityId: number) {
+  getParishesByCityId(cityId: number) {
     let url = environment.apiUrl + '/config/cities/' + cityId + '/parishes';
 
     return new Promise((resolve, reject) => {

@@ -19,9 +19,9 @@ export class PersonalAddressComponent implements OnInit {
   subscriptions: Subscription[] = [];
   isLoading$: Observable<boolean>;
 
-  documentTypes: Array<any> = [];
-  treatments: Array<any> = [];
-  genders: Array<any> = [];
+  states: Array<any> = [];
+  cities: Array<any> = [];
+  parishes: Array<any> = [];
 
   constructor(
     private userService: AuthService,
@@ -44,11 +44,6 @@ export class PersonalAddressComponent implements OnInit {
     this.subscriptions.push(sb);
 
     this.getConfig();
-
-    this._configurationService.getConfiguration();
-    this._configurationService.getStates();
-
-    console.log(this.user);
   }
 
   ngOnDestroy() {
@@ -57,15 +52,10 @@ export class PersonalAddressComponent implements OnInit {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      id: [this.user.id],
-      // photo: [this.user.admin.photo_url],
-      document_type: [this.user.admin?.document_type, Validators.required],
-      document_number: [this.user.admin?.document_number, Validators.required],
-      gender: [this.user.admin?.gender, Validators.required],
-      birthday: [this.user.admin?.birthday, Validators.required],
-      name: [this.user.admin?.name, Validators.required],
-      lastname: [this.user.admin?.lastname, Validators.required],
-      phone: [this.user.admin.phone, Validators.required]
+      state_id: [this.user.admin?.state_id, Validators.required],
+      city_id: [this.user.admin?.city_id, Validators.required],
+      parish_id: [this.user.admin?.parish_id, Validators.required],
+      address: [this.user.admin?.address, Validators.required]
     });
   }
 
@@ -76,30 +66,13 @@ export class PersonalAddressComponent implements OnInit {
       return;
     }
 
-    const formValues = this.formGroup.value;    
+    const formValues = this.formGroup.value;
 
     this.userService.isLoadingSubject.next(true);
 
-    this._userProfileService.updatePersonalInformation(formValues).subscribe(resp => {
+    this._userProfileService.updatePersonalAdress(formValues).subscribe(resp => {
       this.userService.isLoadingSubject.next(false);
     });
-  }
-
-  cancel() {
-    this.user = Object.assign({}, this.firstUserState);
-    this.loadForm();
-  }
-
-  gehoto() {
-    if (!this.user.admin.photo) {
-      return 'none';
-    }
-
-    return `url('${this.user.admin.photo}')`;
-  }
-
-  deletePhoto() {
-    this.user.admin.photo = '';
   }
 
   // helpers for View
@@ -114,29 +87,69 @@ export class PersonalAddressComponent implements OnInit {
   }
 
   getConfig() {
-    this._configurationService.getConfiguration()
+    this._configurationService.getStates()
       .then((resp: any) => {
-        resp.forEach(element => {
-          switch (element.group) {
-            case 'DOCUMENT_TYPES':
-              this.documentTypes.push(element);
-              break;
+        this.states = resp;
 
-            case 'TREATMENT':
-              this.treatments.push(element);
-              break;
-
-            case 'GENDER':
-              this.genders.push(element);
-              break;
-
-            default:
-              break;
-          }
-        });
+        if (this.formGroup.value.state_id != null) {
+          this.getCities(this.formGroup.value.state_id);
+        }
       }).catch(e => {
         console.log(e)
       });
   }
 
+  getCities(state_id) {
+    this._configurationService.getCitiesByStateId(state_id)
+      .then((resp: any) => {
+        this.cities = resp;
+
+        if (this.formGroup.value.parish_id != null) {
+          this.getParishes(this.formGroup.value.city_id);
+        }
+      }).catch(e => {
+        console.log(e)
+      });
+  }
+
+  getParishes(city_id) {
+    this._configurationService.getParishesByCityId(city_id)
+      .then((resp: any) => {
+        this.parishes = resp;
+      }).catch(e => {
+        console.log(e)
+      });
+  }
+
+  changeState() {
+    const state_id = this.formGroup.value.state_id;
+
+    this._configurationService.getCitiesByStateId(state_id)
+      .then((resp: any) => {
+        this.cities = resp;
+        this.formGroup.value.city_id = this.cities[0].id;
+
+        this._configurationService.getParishesByCityId(this.cities[0].id)
+          .then((resp: any) => {
+            this.parishes = resp;
+            this.formGroup.value.parish_id = this.parishes[0].id;
+          }).catch(e => {
+            console.log(e)
+          });
+      }).catch(e => {
+        console.log(e)
+      });
+  }
+
+  changeCity() {
+    const city_id = this.formGroup.value.city_id;
+
+    this._configurationService.getParishesByCityId(city_id)
+      .then((resp: any) => {
+        this.parishes = resp;
+        this.formGroup.value.parish_id = this.parishes[0].id;
+      }).catch(e => {
+        console.log(e)
+      });
+  }
 }

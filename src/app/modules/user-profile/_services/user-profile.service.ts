@@ -20,12 +20,20 @@ export class UserProfileService {
   updatePersonalInformation(data: any) {
     const url = environment.apiUrl + '/me/personal-information';
 
-    console.log(url, data);
+    return this.http.put(url, data, this.authService.httpOptions)
+      .pipe(map( (resp: any) => {
+        const res = resp;
+        return res;
+      })
+    );
+  }
+
+  updatePersonalAdress(data: any) {
+    const url = environment.apiUrl + '/me/personal-address';
 
     return this.http.put(url, data, this.authService.httpOptions)
       .pipe(map( (resp: any) => {
         const res = resp;
-        console.log(res);
         return res;
       })
     );

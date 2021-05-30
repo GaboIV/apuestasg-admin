@@ -29,7 +29,9 @@ export class UserModel extends AuthModel {
     address: String,
     phone: String,
     photo: String,
-    photo_url: String
+    photo_url: String,
+    language: String,
+    timezone: String
   };
   roles: [{
     id: Number,

@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { AuthService, UserModel } from '../../auth';
+import { UserProfileService } from '../_services/user-profile.service';
 
 @Component({
   selector: 'app-account-information',
@@ -17,9 +18,13 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isLoading$: Observable<boolean>;
 
+  timezones: Array<any> = [];
+  languages: Array<any> = [];
+
   constructor(
     private userService: AuthService, 
     private _configurationService: ConfigurationService, 
+    private _userProfileService: UserProfileService,
     private fb: FormBuilder
   ) {
     this.isLoading$ = this.userService.isLoadingSubject.asObservable();
@@ -36,8 +41,7 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(sb);
 
-    this._configurationService.getConfiguration();
-    this._configurationService.getStates();
+    this.getConfig();
   }
 
   ngOnDestroy() {
@@ -46,50 +50,28 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
 
   loadForm() {
     this.formGroup = this.fb.group({
-      username: [this.user.username, Validators.required],
+      nick: [this.user.nick, Validators.required],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      language: [this.user.language],
-      timeZone: [this.user.timeZone],
-      communicationEmail: [this.user.communication.email],
-      communicationSMS: [this.user.communication.sms],
-      communicationPhone: [this.user.communication.phone]
+      language: [this.user.admin?.language],
+      timezone: [this.user.admin?.timezone]
     });
   }
 
   save() {
     this.formGroup.markAllAsTouched();
+
     if (!this.formGroup.valid) {
       return;
     }
 
+    const formValues = this.formGroup.value;    
 
-    const formValues = this.formGroup.value;
-    // prepar user
-    this.user = Object.assign(this.user, {
-      username: formValues.username,
-      email: formValues.email,
-      language: formValues.language,
-      timeZone: formValues.timeZone,
-      communication: {
-        email: formValues.communicationEmail,
-        sms: formValues.communicationSMS,
-        phone: formValues.communicationPhone
-      }
-    });
-
-    // Do request to your server for user update, we just imitate user update there
     this.userService.isLoadingSubject.next(true);
-    setTimeout(() => {
-      this.userService.currentUserSubject.next(Object.assign({}, this.user));
+
+    this._userProfileService.updateAccountInformation(formValues).subscribe(resp => {
       this.userService.isLoadingSubject.next(false);
-    }, 2000);
+    });
   }
-
-  cancel() {
-    this.user = Object.assign({}, this.firstUserState);
-    this.loadForm();
-  }
-
 
   // helpers for View
   isControlValid(controlName: string): boolean {
@@ -100,5 +82,27 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
   isControlInvalid(controlName: string): boolean {
     const control = this.formGroup.controls[controlName];
     return control.invalid && (control.dirty || control.touched);
+  }
+
+  getConfig() {
+    this._configurationService.getConfiguration()
+      .then((resp: any) => {
+        resp.forEach(element => {
+          switch (element.group) {
+            case 'TIMEZONE':
+              this.timezones.push(element);
+              break;
+
+            case 'LANGUAGE':
+              this.languages.push(element);
+              break;
+
+            default:
+              break;
+          }
+        });
+      }).catch(e => {
+        console.log(e)
+      });
   }
 }

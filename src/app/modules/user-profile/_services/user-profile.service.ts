@@ -38,4 +38,15 @@ export class UserProfileService {
       })
     );
   }
+
+  updateAccountInformation(data: any) {
+    const url = environment.apiUrl + '/me/account-information';
+
+    return this.http.put(url, data, this.authService.httpOptions)
+      .pipe(map( (resp: any) => {
+        const res = resp;
+        return res;
+      })
+    );
+  }
 }

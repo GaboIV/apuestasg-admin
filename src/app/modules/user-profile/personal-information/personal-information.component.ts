@@ -46,8 +46,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
     this._configurationService.getConfiguration();
     this._configurationService.getStates();
-
-    console.log(this.user);
   }
 
   ngOnDestroy() {
@@ -89,7 +87,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.loadForm();
   }
 
-  gehoto() {
+  gePhoto() {
     if (!this.user.admin.photo) {
       return 'none';
     }

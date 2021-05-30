@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { AuthService, UserModel } from '../../auth';
 
 @Component({
@@ -16,7 +17,11 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isLoading$: Observable<boolean>;
 
-  constructor(private userService: AuthService, private fb: FormBuilder) {
+  constructor(
+    private userService: AuthService, 
+    private _configurationService: ConfigurationService, 
+    private fb: FormBuilder
+  ) {
     this.isLoading$ = this.userService.isLoadingSubject.asObservable();
   }
 
@@ -28,7 +33,11 @@ export class AccountInformationComponent implements OnInit, OnDestroy {
       this.firstUserState = Object.assign({}, user);
       this.loadForm();
     });
+
     this.subscriptions.push(sb);
+
+    this._configurationService.getConfiguration();
+    this._configurationService.getStates();
   }
 
   ngOnDestroy() {

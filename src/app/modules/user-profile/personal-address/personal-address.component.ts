@@ -7,11 +7,12 @@ import { AuthService, UserModel } from '../../auth';
 import { UserProfileService } from '../_services/user-profile.service';
 
 @Component({
-  selector: 'app-personal-information',
-  templateUrl: './personal-information.component.html',
-  styleUrls: ['./personal-information.component.scss']
+  selector: 'app-personal-address',
+  templateUrl: './personal-address.component.html',
+  styleUrls: ['./personal-address.component.scss']
 })
-export class PersonalInformationComponent implements OnInit, OnDestroy {
+export class PersonalAddressComponent implements OnInit {
+
   formGroup: FormGroup;
   user: UserModel;
   firstUserState: UserModel;
@@ -137,4 +138,5 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         console.log(e)
       });
   }
+
 }

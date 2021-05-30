@@ -33,8 +33,18 @@ export class UserModel extends AuthModel {
   };
   roles: [{
     id: Number,
-    name: String
+    name: String,
+    key?: String,
+    guard_name?: String,
+    created_at?: Date,
+    updated_at?: Date
   }];
+
+
+
+
+
+
   username: String;
   password: String;
   fullname: String;

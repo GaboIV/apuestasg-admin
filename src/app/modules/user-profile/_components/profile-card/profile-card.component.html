@@ -76,6 +76,16 @@
         </a>
       </div>
       <div class="navi-item mb-2">
+        <a class="navi-link py-4" routerLink="/user-profile/personal-address" routerLinkActive="active">
+          <span class="navi-icon mr-2">
+            <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon"></span>
+          </span>
+          <span class="navi-text font-size-lg">
+            Información de dirección
+          </span>
+        </a>
+      </div>
+      <div class="navi-item mb-2">
         <a class="navi-link py-4" routerLink="/user-profile/account-information" routerLinkActive="active">
           <span class="navi-icon mr-2">
             <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'" cacheSVG="true" class="svg-icon"></span>
@@ -119,18 +129,6 @@
           </span>
           <span class="navi-text font-size-lg">
             Saved Credit Cards
-          </span>
-        </a>
-      </div>
-      <div class="navi-item mb-2">
-        <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t2="ngbTooltip"
-          (click)="t2.open()" placement="right">
-          <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Files/File.svg'" cacheSVG="true" class="svg-icon"></span>
-          </span>
-          <span class="navi-text font-size-lg">Tax information</span>
-          <span class="navi-label">
-            <span class="label label-light-primary label-inline font-weight-bold">new</span>
           </span>
         </a>
       </div>

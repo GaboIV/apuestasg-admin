@@ -14,10 +14,10 @@ import {AccountInformationComponent} from './account-information/account-informa
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {EmailSettingsComponent} from './email-settings/email-settings.component';
 import {SavedCreditCardsComponent} from './saved-credit-cards/saved-credit-cards.component';
-import {TaxInformationComponent} from './tax-information/tax-information.component';
 import {StatementsComponent} from './statements/statements.component';
 import {UserProfileRoutingModule} from './user-profile-routing.module';
 import {ProfileCardComponent} from './_components/profile-card/profile-card.component';
+import { PersonalAddressComponent } from './personal-address/personal-address.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import {ProfileCardComponent} from './_components/profile-card/profile-card.comp
     ChangePasswordComponent,
     EmailSettingsComponent,
     SavedCreditCardsComponent,
-    TaxInformationComponent,
+    PersonalAddressComponent,
     StatementsComponent,
     ProfileCardComponent
   ],

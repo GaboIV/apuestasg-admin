@@ -22,7 +22,7 @@
       </div>
       <div class="card-toolbar">
         <button type="submit" [disabled]="formGroup.invalid" class="btn btn-success mr-2" (click)="save()">Guardar cambios</button>
-        <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+        <button type="reset" class="btn btn-secondary" [routerLink]="['/dashboard']">Cancelar</button>
       </div>
     </div>
     <!--end::Header-->
@@ -30,7 +30,7 @@
     <div class="form">
       <!--begin::Body-->
       <div class="card-body">
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Imagen de perfil</label>
           <div class="col-lg-9 col-xl-6">
             <div class="image-input image-input-outline"
@@ -62,15 +62,40 @@
             </div>
             <span class="form-text text-muted">Tipo de archivos permitidos: png, jpg, jpeg.</span>
           </div>
+        </div> -->
+        <div class="row">
+          <label class="col-xl-3"></label>
+          <div class="col-lg-9 col-xl-6">
+            <h5 class="font-weight-bold mt-10 mb-6">Datos personales</h5>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">Tipo de documento</label>
+          <div class="col-lg-9 col-xl-6">
+            <select class="form-control form-control-lg form-control-solid" formControlName="document_type">
+              <option *ngFor="let item of documentTypes" value="{{item.abbreviation}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">Número de documento</label>
+          <div class="col-lg-9 col-xl-6">
+            <input class="form-control form-control-lg form-control-solid"
+              type="text"
+              formControlName="document_number"
+              [class.is-invalid]="isControlInvalid('document_number')"
+              [class.is-valid]="isControlValid('document_number')"
+            />
+          </div>
         </div>
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Nombres</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
               type="text"
-              formControlName="firstname"
-              [class.is-invalid]="isControlInvalid('firstname')"
-              [class.is-valid]="isControlValid('firstname')"
+              formControlName="name"
+              [class.is-invalid]="isControlInvalid('name')"
+              [class.is-valid]="isControlValid('name')"
             />
           </div>
         </div>
@@ -86,19 +111,26 @@
             />
           </div>
         </div>
-        <!-- <div class="form-group row">
-          <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">Fecha de nacimiento</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
-              type="text"
-              formControlName="role"
-              [class.is-invalid]="isControlInvalid('role')"
-              [class.is-valid]="isControlValid('role')"
+              type="date"
+              value="Bold"
+              formControlName="birthday"
+              [class.is-invalid]="isControlInvalid('birthday')"
+              [class.is-valid]="isControlValid('birthday')"
             />
-            <span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your
-              full name.</span>
           </div>
-        </div> -->
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-3 col-lg-3 col-form-label">Género</label>
+          <div class="col-lg-9 col-xl-6">
+            <select class="form-control form-control-lg form-control-solid" formControlName="gender">
+              <option *ngFor="let item of genders" value="{{item.abbreviation}}">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
         <div class="row">
           <label class="col-xl-3"></label>
           <div class="col-lg-9 col-xl-6">
@@ -122,10 +154,10 @@
                 [class.is-valid]="isControlValid('phone')"
               />
             </div>
-            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+            <!-- <span class="form-text text-muted">We'll never share your email with anyone else.</span> -->
           </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Correo electrónico</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -143,8 +175,8 @@
               />
             </div>
           </div>
-        </div>
-        <div class="form-group row">
+        </div> -->
+        <!-- <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Dirección</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -157,7 +189,7 @@
                 />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!--end::Body-->
     </div>

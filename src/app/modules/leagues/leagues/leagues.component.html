@@ -1,0 +1,162 @@
+<div class="card card-custom gutter-b">
+  <div class="card-header">
+    <div class="card-title">
+      <h3 class="card-label">Lista de ligas</h3>
+    </div>
+    {{total}}
+    <div class="card-toolbar">
+      <a type="button" class="btn btn-primary" routerLink="/ecommerce/product/add">Nueva liga</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- begin: Filtration form -->
+    <div class="form form-label-right">
+      <div class="form-group row">
+        <!-- <div class="col-lg-4">
+          <div class="row" [formGroup]="filterGroup">
+            <div class="col-lg-6">
+              <select class="form-control" name="status" placeholder="Filter by Status" formControlName="status">
+                <option value="">All</option>
+                <option value="1">Selling</option>
+                <option value="2">Sold</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Status</small>
+            </div>
+            <div class="col-lg-6">
+              <select class="form-control" placeholder="Filter by Contition" name="condition"
+                formControlName="condition">
+                <option value="">All</option>
+                <option value="1">New</option>
+                <option value="2">Used</option>
+              </select><small class="form-text text-muted"><b>Filter</b> by Condition</small>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-lg-4">
+          <input type="text" class="form-control" name="searchText" placeholder="Búsqueda por nombre, deporte o país"
+            value="" />
+          <!-- <small class="form-text text-muted"><b>Búsqueda de texto</b> en las columnas nombre, deporte y país</small> -->
+        </div>
+      </div>
+    </div>
+    <!-- end: Filtration form -->
+
+    <!-- begin: Grouping -->
+    <!-- <ng-container>
+      <div class="form">
+        <div class="row align-items-center form-group-actions margin-top-20 margin-bottom-20">
+          <div class="col-xl-12">
+            <div class="form-group form-group-inline">
+              <div class="form-label form-label-no-wrap">
+                <label class="font-bold font-danger"><span>Selected records count:
+                    <b>0</b></span></label>
+              </div>
+              <div>
+                <button type="button" class="btn btn-danger font-weight-bolder font-size-sm mr-1"
+                  >
+                  <i class="fa fa-trash"></i> Delete All</button>&nbsp;
+                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm mr-1"
+                  >
+                  <i class="fa fa-stream"></i> Fetch Selected</button>&nbsp;
+                <button type="button" class="btn btn-light-primary font-weight-bolder font-size-sm"
+                  >
+                  <i class="fa fa-sync-alt"></i> Update Status
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container> -->
+    <!-- end: Grouping -->
+    <!-- begin:Table -->
+    <div class="table-responsive angular-bootstrap-table">
+      <table class="table table-head-custom table-vertical-center overflow-hidden">
+        <thead>
+          <th class="selection-cell-header" data-row-selection="true">
+            <label class="checkbox checkbox-single">
+              <!-- <input type="checkbox" [checked]="true" /> -->
+              <span>
+
+              </span>
+            </label>
+          </th>
+          <th>
+            ID
+            <!-- <app-sort-icon column="id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            NOMBRE
+            <!-- <app-sort-icon column="name" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            DEPORTE
+            <!-- <app-sort-icon column="category" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            CÓD. SINC.
+            <!-- <app-sort-icon column="web_id" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            ÚLT. SINC.
+            <!-- <app-sort-icon column="last_sync" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            IMP.
+            <!-- <app-sort-icon column="importance" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>
+            IMAGEN
+          </th>
+          <th>
+            PAÍS
+            <!-- <app-sort-icon column="country" [activeColumn]="sorting.column" [activeDirection]="sorting.direction"
+              (sort)="sort($event)"></app-sort-icon> -->
+          </th>
+          <th>ACCIONES</th>
+        </thead>
+        <tbody>
+
+          
+
+          <!-- <tr *ngFor="let league of leaguesService.items$ | async"> -->
+          <tr *ngFor="let league of leagues">
+            <td class="selection-cell">
+              <label class="checkbox checkbox-single">
+                <!-- <input type="checkbox" [checked]="true" /> -->
+                <span></span>
+              </label>
+            </td>
+            <td>{{league.id}}</td>
+            <td>{{league.name}}</td>
+            <td>{{league.category?.name}}</td>
+            <td>
+              <span class="label label-lg label-inline" style="margin-right: 2px;" *ngFor="let cod of league.name_uk">
+                {{cod}}&nbsp;
+                <i class="fas fa-window-close icon-close"></i>&nbsp;
+                <i class="fas fa-pen-square icon-edit"></i>
+              </span>
+              <i class="fas fa-plus-square icon-new" (click)="addTipicoCode(league)"></i>
+            </td>
+            <td>
+              <ng-container>2021-06-01 13:05</ng-container>
+            </td>
+            <td>50</td>
+            <td>
+              <img src="https://assets.laliga.com/assets/logos/laliga-v/laliga-v-1200x1200.jpg" alt="" height="20px">
+            </td>
+            <td>Venezuela</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- end: Table -->
+    <!-- <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [paginator]="paginator"
+      [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator> -->
+  </div>
+</div>

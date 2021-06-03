@@ -25,6 +25,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'leagues',
+        loadChildren: () =>
+          import('../modules/leagues/leagues.module').then(
+            (m) => m.LeaguesModule
+          ),
+      },
+      {
         path: 'user-management',
         loadChildren: () =>
           import('../modules/user-management/user-management.module').then(

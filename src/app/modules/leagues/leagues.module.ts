@@ -9,13 +9,15 @@ import { LeaguePlatformComponent } from './leagues-platform.component';
 import { LeaguesRoutingModule } from './leagues-routing.module';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddTipicoCodeModalComponent } from './leagues/components/add-tipico-code/add-tipico-code-modal.component';
+import { DeleteTipicoCodeModalComponent } from './leagues/components/delete-tipico-code/delete-tipico-code-modal.component';
 
 @NgModule({
   declarations: [
     LeaguesComponent,
     LeaguePlatformComponent,
     // Modals
-    AddTipicoCodeModalComponent
+    AddTipicoCodeModalComponent,
+    DeleteTipicoCodeModalComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { AddTipicoCodeModalComponent } from './leagues/components/add-tipico-cod
   ],
   entryComponents: [
     // Modals
-    AddTipicoCodeModalComponent
+    AddTipicoCodeModalComponent,
+    DeleteTipicoCodeModalComponent
   ]
 })
 export class LeaguesModule {}

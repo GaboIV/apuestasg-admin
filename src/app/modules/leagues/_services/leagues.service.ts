@@ -35,7 +35,16 @@ export class LeaguesService {
   attachTipicoCode(league: League, code: String) {
     const url = this.URL_LEAGUES + "/" + league.id + "/attach";
 
-    return this.http.patch( url, { name_uk: code }, this._authService.httpOptions  )
+    return this.http.patch( url, { code: code }, this._authService.httpOptions  )
+    .pipe(map ( (resp: any) => {
+      return resp;
+    }));
+  }
+
+  dettachTipicoCode(league: League, code: String) {
+    const url = this.URL_LEAGUES + "/" + league.id + "/dettach";
+
+    return this.http.patch( url, { code: code }, this._authService.httpOptions  )
     .pipe(map ( (resp: any) => {
       return resp;
     }));

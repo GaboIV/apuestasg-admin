@@ -121,9 +121,6 @@
           <th>ACCIONES</th>
         </thead>
         <tbody>
-
-          
-
           <!-- <tr *ngFor="let league of leaguesService.items$ | async"> -->
           <tr *ngFor="let league of leagues">
             <td class="selection-cell">
@@ -136,10 +133,10 @@
             <td>{{league.name}}</td>
             <td>{{league.category?.name}}</td>
             <td>
-              <span class="label label-lg label-inline" style="margin-right: 2px;" *ngFor="let cod of league.name_uk">
+              <span class="label label-lg label-inline" style="margin-right: 2px; margin-bottom: 2px;" *ngFor="let cod of league.name_uk">
                 {{cod}}&nbsp;
-                <i class="fas fa-window-close icon-close"></i>&nbsp;
-                <i class="fas fa-pen-square icon-edit"></i>
+                <i class="fas fa-window-close icon-close" (click)="deleteTipicoCode(league, cod)"></i>&nbsp;
+                <!-- <i class="fas fa-pen-square icon-edit"></i> -->
               </span>
               <i class="fas fa-plus-square icon-new" (click)="addTipicoCode(league)"></i>
             </td>

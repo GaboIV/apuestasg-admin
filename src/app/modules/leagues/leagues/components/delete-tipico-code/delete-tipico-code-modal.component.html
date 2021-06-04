@@ -6,23 +6,16 @@
 </ng-container>
 
 <div class="modal-header">
-  <div class="modal-title h4">Añadir código de sincronización para liga</div>
+  <div class="modal-title h4">Eliminar código de sincronización para liga</div>
 </div>
 <div class="modal-body">
-  <!-- <ng-container *ngIf="isLoading">
-    <span>Product is deleting...</span>
+  <ng-container *ngIf="isLoading">
+    <span>El código se está eliminando...</span>
   </ng-container>
 
   <ng-container *ngIf="!isLoading">
-    <span>Are you sure to permanently delete this product?</span>
-  </ng-container> -->
-
-  <form>
-    <div class="form-group">
-      <label for="code">Código de sincronización</label>
-      <input [(ngModel)]="code" name="code" (keyup.enter)="attachTipicoCode()" type="text" class="form-control" id="code" placeholder="Escriba el nuevo código de sincronización para la liga">
-    </div>
-  </form>
+    <span>¿Está seguro de eliminar el código <b>{{code}}</b> para la liga <b>{{league.name}}</b>?</span>
+  </ng-container>
 </div>
 
 <div class="modal-footer">
@@ -30,8 +23,8 @@
     <button type="button" class="btn btn-light btn-elevate mr-1" (click)="modal.dismiss()">
       Cancelar
     </button>&nbsp;
-    <button type="button" class="btn btn-primary btn-elevate" (click)="attachTipicoCode()">
-      Guardar
+    <button #input1 type="button" class="btn btn-primary btn-elevate" (click)="dettachTipicoCode()">
+      Sí, eliminar
     </button>
   </div>
 

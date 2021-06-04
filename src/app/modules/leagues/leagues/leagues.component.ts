@@ -5,6 +5,7 @@ import { LeaguesService } from '../_services/leagues.service';
 import { League } from '../_models/leagues';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddTipicoCodeModalComponent } from './components/add-tipico-code/add-tipico-code-modal.component';
+import { DeleteTipicoCodeModalComponent } from './components/delete-tipico-code/delete-tipico-code-modal.component';
 
 @Component({
   selector: 'app-leagues',
@@ -72,7 +73,17 @@ export class LeaguesComponent implements OnInit {
     modalRef.componentInstance.passEntry.subscribe((leagueEntry) => {
       this.leagues.find(x => x.id === leagueEntry.id).name_uk = leagueEntry.name_uk;
       modalRef.close();
-    });
-    
+    });    
+  }
+
+  deleteTipicoCode(league: League, code: String) {
+    const modalRef = this.modalService.open(DeleteTipicoCodeModalComponent);
+    modalRef.componentInstance.league = league;
+    modalRef.componentInstance.code = code;
+
+    modalRef.componentInstance.passEntry.subscribe((leagueEntry) => {
+      this.leagues.find(x => x.id === leagueEntry.id).name_uk = leagueEntry.name_uk;
+      modalRef.close();
+    });    
   }
 }

@@ -1,19 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of, Subscription } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Category } from 'src/app/modules/categories/_models/category';
+import { CategoryService } from 'src/app/modules/categories/_services/category.service';
+import { Country } from 'src/app/modules/countries/_models/country';
+import { CountryService } from 'src/app/modules/countries/_services/country.service';
+import { AppToastService } from 'src/app/services/app-toast-service';
 import { League } from '../../_models/leagues';
-import { LeaguesService } from '../../_services/leagues.service';
-
-const EMPTY_LEAGUE: League = {
-  id: undefined,
-  name: 'Nombre de liga',
-  category_id: 1,
-  country_id: 1,
-  match_structure_id: 4,
-  status: true
-};
+import { LeagueService } from '../../_services/league.service';
 
 @Component({
   selector: 'app-league-edit',
@@ -21,70 +18,64 @@ const EMPTY_LEAGUE: League = {
   styleUrls: ['./league-edit.component.scss']
 })
 export class LeagueEditComponent implements OnInit, OnDestroy {
-  id: number;
-  league: League;
+  @Input() league: League;
+  @Output() passEntry: EventEmitter<any> = new EventEmitter();
+  
   previous: League;
+
   formGroup: FormGroup;
+
+  isLoading = false;
   isLoading$: Observable<boolean>;
+
   errorMessage = '';
-  tabs = {
-    BASIC_TAB: 0,
-    REMARKS_TAB: 1,
-    SPECIFICATIONS_TAB: 2
-  };
-  activeTabId = this.tabs.BASIC_TAB; // 0 => Basic info | 1 => Remarks | 2 => Specifications
-  private subscriptions: Subscription[] = [];
+
+  countries: Country[];
+  categories: Category[];
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private leaguesService: LeaguesService,
+    private _leagueService: LeagueService,
+    public _countryService: CountryService,
+    public _categoryService: CategoryService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public modal: NgbActiveModal,
+    public toastService: AppToastService,
   ) { }
 
   ngOnInit(): void {
-    // this.isLoading$ = this.leaguesService.isLoading$;
-    this.loadProduct();
-  }
-
-  loadProduct() {
-    const sb = this.route.paramMap.pipe(
-      switchMap(params => {
-        // get id from URL
-        this.id = Number(params.get('id'));
-        if (this.id || this.id > 0) {
-          // return this.leaguesService.getItemById(this.id);
-        }
-        return of(EMPTY_LEAGUE);
-      }),
-      catchError((errorMessage) => {
-        this.errorMessage = errorMessage;
-        return of(undefined);
-      }),
-    ).subscribe((res: League) => {
-      if (!res) {
-        this.router.navigate(['/products'], { relativeTo: this.route });
-      }
-
-      this.league = res;
-      this.previous = Object.assign({}, res);
-      this.loadForm();
-    });
-    this.subscriptions.push(sb);
+    this.loadForm();
+    this.getCategories();
+    this.getCountries();
   }
 
   loadForm() {
-    if (!this.league) {
-      return;
-    }
-
     this.formGroup = this.fb.group({
+      id: [this.league?.id],
       name: [this.league.name, Validators.required],
+      name_uk: [this.league.name_uk],
       category_id: [this.league.category_id, Validators.required],
       country_id: [this.league.country_id, Validators.required],
-      match_structure_id: [this.league.match_structure_id, Validators.required],
-      status: [this.league.status, Validators.required],
+      importance: [this.league.importance],
+      match_structure_id: [this.league.match_structure_id]
     });
+  }
+
+  getCountries() {
+    this._countryService.get()
+      .then((resp: any) => {
+        this.countries = resp;
+      }).catch(e => { console.log(e) });
+  }
+
+  getCategories() {
+    this._categoryService.get()
+      .then((resp: any) => {
+        this.categories = resp;
+      }).catch(e => { console.log(e) });
   }
 
   reset() {
@@ -97,34 +88,48 @@ export class LeagueEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.formGroup.markAllAsTouched();
-    if (!this.formGroup.valid) {
-      return;
-    }
+    this.isLoading = true;
+    const toast = this.toastService.show('Enviando información al servidor:', 'loading');
 
-    const formValues = this.formGroup.value;
-    this.league = Object.assign(this.league, formValues);
-    if (this.id) {
-      this.edit();
+    if (!this.league.id) {
+      return this._leagueService.save(this.formGroup.value)
+        .subscribe(
+          (resp: any) => {
+          this.isLoading = false;
+          this.toastService.remove(toast);
+          this.toastService.show('Liga creada correctamente', 'success');
+          this.returnData(resp);
+        },
+        error => {
+          this.toastService.remove(toast);
+          const errorToast = this.toastService.show('Error creando liga: ' + error.error.message, 'bug');
+        });
     } else {
-      this.create();
+      return this._leagueService.update(this.formGroup.value)
+        .subscribe(
+          (resp: any) => {
+          this.isLoading = false;
+          this.toastService.remove(toast);
+          this.toastService.show('Liga actualizada correctamente', 'success');
+          this.returnData(resp);
+        },
+        error => {
+          this.toastService.remove(toast);
+          const errorToast = this.toastService.show('Error actualizando liga: ' + error.error.message, 'bug');
+        });
     }
+  }
+
+  returnData(league: League) {
+    this.passEntry.emit(league);
   }
 
   edit() {
-    
+
   }
 
   create() {
-      
-  }
 
-  changeTab(tabId: number) {
-    this.activeTabId = tabId;
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sb => sb.unsubscribe());
   }
 
   // helpers for View
@@ -146,5 +151,9 @@ export class LeagueEditComponent implements OnInit, OnDestroy {
   isControlTouched(controlName: string): boolean {
     const control = this.formGroup.controls[controlName];
     return control.dirty || control.touched;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sb => sb.unsubscribe());
   }
 }

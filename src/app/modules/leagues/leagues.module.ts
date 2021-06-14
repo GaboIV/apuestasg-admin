@@ -7,9 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaguesComponent } from './leagues/leagues.component';
 import { LeaguePlatformComponent } from './leagues-platform.component';
 import { LeaguesRoutingModule } from './leagues-routing.module';
-import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddTipicoCodeModalComponent } from './leagues/components/add-tipico-code/add-tipico-code-modal.component';
 import { DeleteTipicoCodeModalComponent } from './leagues/components/delete-tipico-code/delete-tipico-code-modal.component';
+import { LeagueEditComponent } from './leagues/league-edit/league-edit.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DeleteTipicoCodeModalComponent } from './leagues/components/delete-tipi
     LeaguePlatformComponent,
     // Modals
     AddTipicoCodeModalComponent,
-    DeleteTipicoCodeModalComponent
+    DeleteTipicoCodeModalComponent,
+    LeagueEditComponent
   ],
   imports: [
     CommonModule,
@@ -28,12 +30,14 @@ import { DeleteTipicoCodeModalComponent } from './leagues/components/delete-tipi
     InlineSVGModule,
     CRUDTableModule,
     NgbModalModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    NgbModule
   ],
   entryComponents: [
     // Modals
     AddTipicoCodeModalComponent,
-    DeleteTipicoCodeModalComponent
+    DeleteTipicoCodeModalComponent,
+    LeagueEditComponent
   ]
 })
 export class LeaguesModule {}

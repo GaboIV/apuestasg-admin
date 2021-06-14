@@ -10,7 +10,7 @@ const routes: Routes = [
     component: LeaguePlatformComponent,
     children: [
       {
-        path: 'leagues',
+        path: 'table',
         component: LeaguesComponent,
       },
       {
@@ -25,8 +25,8 @@ const routes: Routes = [
         path: 'league/edit/:id',
         component: LeagueEditComponent
       },
-      { path: '', redirectTo: 'leagues', pathMatch: 'full' },
-      { path: '**', redirectTo: 'leagues', pathMatch: 'full' },
+      { path: '', redirectTo: 'table', pathMatch: 'full' },
+      { path: '**', redirectTo: 'table', pathMatch: 'full' },
     ],
   },
 ];

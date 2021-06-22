@@ -20,6 +20,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'countries',
+        loadChildren: () =>
+          import('../modules/countries/countries.module').then(
+            (m) => m.CountriesModule
+          ),
+      },
+      {
         path: 'leagues',
         loadChildren: () =>
           import('../modules/leagues/leagues.module').then(

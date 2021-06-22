@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BetTypesComponent } from './bet-types/bet-types.component';
-import { CategoriesPlatformComponent } from './categories-platform.component';
-import { CategoriesComponent } from './table/categories.component';
+import { CountriesPlatformComponent } from './countries-platform.component';
+import { CountriesComponent } from './table/countries.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CategoriesPlatformComponent,
+    component: CountriesPlatformComponent,
     children: [
       {
         path: 'table',
-        component: CategoriesComponent,
-      },
-      {
-        path: 'bet-types',
-        component: BetTypesComponent,
+        component: CountriesComponent,
       },
       { path: '', redirectTo: 'table', pathMatch: 'full' },
       { path: '**', redirectTo: 'table', pathMatch: 'full' },
@@ -27,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CategoriesRoutingModule {}
+export class CountriesRoutingModule {}

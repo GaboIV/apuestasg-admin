@@ -5,24 +5,22 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { CRUDTableModule } from '../../_metronic/shared/crud-table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriesRoutingModule } from './categories-routing.module';
-import { CategoriesPlatformComponent } from './categories-platform.component';
-import { CategoriesComponent } from './table/categories.component';
-import { NewEditCategoryModalComponent } from './components/new-edit-category-modal/new-edit-category-modal.component';
-import { BetTypesComponent } from './bet-types/bet-types.component';
+import { CountriesComponent } from './table/countries.component';
+import { NewEditCountryModalComponent } from './components/new-edit-country-modal/new-edit-country-modal.component';
+import { CountriesRoutingModule } from './countries-routing.module';
+import { CountriesPlatformComponent } from './countries-platform.component';
 
 @NgModule({
   declarations: [
-    CategoriesComponent,
-    BetTypesComponent,
-    CategoriesPlatformComponent,
+    CountriesComponent,
+    CountriesPlatformComponent,
     // Modals
-    NewEditCategoryModalComponent
+    NewEditCountryModalComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
-    CategoriesRoutingModule,
+    CountriesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     InlineSVGModule,
@@ -33,7 +31,7 @@ import { BetTypesComponent } from './bet-types/bet-types.component';
   ],
   entryComponents: [
     // Modals
-    NewEditCategoryModalComponent
+    NewEditCountryModalComponent
   ]
 })
-export class CategoriesModule {}
+export class CountriesModule {}

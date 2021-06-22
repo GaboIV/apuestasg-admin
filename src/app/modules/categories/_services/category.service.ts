@@ -10,6 +10,7 @@ import { Category } from '../_models/category';
 })
 export class CategoryService {
   URL_CATEGORIES = environment.apiUrl + "/categories"
+  URL_BET_TYPES = environment.apiUrl + "/bet-types"
 
   constructor(
     private http: HttpClient,

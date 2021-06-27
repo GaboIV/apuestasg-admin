@@ -10,14 +10,20 @@ import { CategoriesPlatformComponent } from './categories-platform.component';
 import { CategoriesComponent } from './table/categories.component';
 import { NewEditCategoryModalComponent } from './components/new-edit-category-modal/new-edit-category-modal.component';
 import { BetTypesComponent } from './bet-types/bet-types.component';
+import { MatchStructuresComponent } from './match-structures/match-structures.component';
+import { DeleteMainBetTypeModalComponent } from './match-structures/components/delete-main-bet-type/delete-main-bet-type-modal.component';
+import { AddMainBetTypeModalComponent } from './match-structures/components/add-main-bet-type/add-main-bet-type-modal.component';
 
 @NgModule({
   declarations: [
     CategoriesComponent,
     BetTypesComponent,
     CategoriesPlatformComponent,
+    MatchStructuresComponent,
     // Modals
-    NewEditCategoryModalComponent
+    NewEditCategoryModalComponent,
+    DeleteMainBetTypeModalComponent,
+    AddMainBetTypeModalComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +39,9 @@ import { BetTypesComponent } from './bet-types/bet-types.component';
   ],
   entryComponents: [
     // Modals
-    NewEditCategoryModalComponent
+    NewEditCategoryModalComponent,
+    DeleteMainBetTypeModalComponent,
+    AddMainBetTypeModalComponent
   ]
 })
 export class CategoriesModule {}

@@ -7,34 +7,16 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class BetTypeService {
-  URL_BET_TYPES = environment.apiUrl + "/bet-types"
+export class MatchStructuresService {
+  URL_MATCH_STRUCTURES = environment.apiUrl + "/match-structures"
 
   constructor(
     private http: HttpClient,
     public _authService: AuthService,
   ) { }
 
-  getBetTypesByCategory(category_id) {
-    let url = this.URL_BET_TYPES;
-
-    url += "?category_id=" + category_id;
-
-    return new Promise((resolve, reject) => {
-      if (sessionStorage.getItem('bet-types-' + category_id)) {
-        resolve(JSON.parse(sessionStorage.getItem('bet-types-' + category_id)));
-      } else {
-        this.http.get(url, this._authService.httpOptions)
-          .subscribe((resp: any) => {
-            sessionStorage.setItem('bet-types-' + category_id, JSON.stringify(resp.bet_types));
-            resolve(resp.bet_types);
-          }, error => reject("Error"));
-      }
-    });
-  }
-
   pagination(page: number, filters: Object) {
-    let url = this.URL_BET_TYPES + '?page=' + page;
+    let url = this.URL_MATCH_STRUCTURES + '?page=' + page;
 
     Object.keys(filters).forEach(key => {
       if (filters[key] != '')
@@ -43,12 +25,12 @@ export class BetTypeService {
 
     return this.http.get(url, this._authService.httpOptions)
       .pipe(map((resp: any) => {
-        return resp.bet_types;
+        return resp.match_structures;
       }));
   }
 
   updateValue(id, value, parameter) {
-    const url = this.URL_BET_TYPES + '/' + id;
+    const url = this.URL_MATCH_STRUCTURES + '/' + id;
     
     var key = parameter;
     var obj = {};
@@ -60,5 +42,23 @@ export class BetTypeService {
         return res;
       })
     );
+  }
+
+  attachMainBetType(matchStructure: any, mainBetType: any) {
+    const url = this.URL_MATCH_STRUCTURES + "/" + matchStructure.id + "/add-main-bet-type";
+
+    return this.http.patch( url, { main_bet_type: mainBetType }, this._authService.httpOptions  )
+    .pipe(map ( (resp: any) => {
+      return resp;
+    }));
+  }
+
+  dettachMainBetType(matchStructure: any, mainBetType: any) {
+    const url = this.URL_MATCH_STRUCTURES + "/" + matchStructure.id + "/delete-main-bet-type";
+
+    return this.http.patch( url, { main_bet_type: mainBetType }, this._authService.httpOptions  )
+    .pipe(map ( (resp: any) => {
+      return resp;
+    }));
   }
 }

@@ -13,6 +13,7 @@ import { BetTypesComponent } from './bet-types/bet-types.component';
 import { MatchStructuresComponent } from './match-structures/match-structures.component';
 import { DeleteMainBetTypeModalComponent } from './match-structures/components/delete-main-bet-type/delete-main-bet-type-modal.component';
 import { AddMainBetTypeModalComponent } from './match-structures/components/add-main-bet-type/add-main-bet-type-modal.component';
+import { NewEditMatchStructureModalComponent } from './match-structures/new-edit-match-structure-modal/new-edit-match-structure-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AddMainBetTypeModalComponent } from './match-structures/components/add-
     // Modals
     NewEditCategoryModalComponent,
     DeleteMainBetTypeModalComponent,
-    AddMainBetTypeModalComponent
+    AddMainBetTypeModalComponent,
+    NewEditMatchStructureModalComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { AddMainBetTypeModalComponent } from './match-structures/components/add-
     // Modals
     NewEditCategoryModalComponent,
     DeleteMainBetTypeModalComponent,
-    AddMainBetTypeModalComponent
+    AddMainBetTypeModalComponent,
+    NewEditMatchStructureModalComponent
   ]
 })
 export class CategoriesModule {}

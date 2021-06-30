@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../auth';
 import { map } from 'rxjs/operators';
+import { MatchStructure } from '../_models/match-structure';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,26 @@ export class MatchStructuresService {
       .pipe(map((resp: any) => {
         return resp.match_structures;
       }));
+  }
+
+  save(matchStructure: MatchStructure) {
+    const url = this.URL_MATCH_STRUCTURES;
+
+    return this.http.post(url, matchStructure, this._authService.httpOptions)
+      .pipe(map((resp: any) => {
+        return resp;
+      })
+      );
+  }
+
+  update(matchStructure: MatchStructure) {
+    const url = this.URL_MATCH_STRUCTURES + '/' + matchStructure.id;
+
+    return this.http.put(url, matchStructure, this._authService.httpOptions)
+      .pipe(map((resp: any) => {
+        return resp;
+      })
+      );
   }
 
   updateValue(id, value, parameter) {

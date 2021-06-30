@@ -4,11 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppToastService } from 'src/app/services/app-toast-service';
 import { BetType } from '../_models/bet-type';
 import { Category } from '../_models/category';
+import { MatchStructure } from '../_models/match-structure';
 import { BetTypeService } from '../_services/bet-type.service';
 import { CategoryService } from '../_services/category.service';
 import { MatchStructuresService } from '../_services/match-structures.service';
 import { AddMainBetTypeModalComponent } from './components/add-main-bet-type/add-main-bet-type-modal.component';
 import { DeleteMainBetTypeModalComponent } from './components/delete-main-bet-type/delete-main-bet-type-modal.component';
+import { NewEditMatchStructureModalComponent } from './new-edit-match-structure-modal/new-edit-match-structure-modal.component';
 
 @Component({
   selector: 'app-match-structures',
@@ -17,6 +19,10 @@ import { DeleteMainBetTypeModalComponent } from './components/delete-main-bet-ty
 })
 
 export class MatchStructuresComponent implements OnInit {
+
+  EMPTY_MATCH_STRUCTURE: MatchStructure = {
+    id: undefined
+  };
 
   filters = {
     "id": "",
@@ -161,6 +167,16 @@ export class MatchStructuresComponent implements OnInit {
 
     modalRef.componentInstance.passEntry.subscribe((dataReturn) => {
       this.data.find(x => x.id === dataReturn.id).main_bet_types = dataReturn.main_bet_types;
+      modalRef.close();
+    });
+  }
+
+  newEditMatchStructure(matchStructure: MatchStructure) {
+    const modalRef = this.modalService.open(NewEditMatchStructureModalComponent);
+    modalRef.componentInstance.matchStructure = matchStructure;
+
+    modalRef.componentInstance.passEntry.subscribe((matchStructureEntry) => {
+      this.get(1);
       modalRef.close();
     });
   }
